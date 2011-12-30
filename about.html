@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<!-- saved from url=(0027)http://rallyplan.com/about/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+  <meta charset="utf-8">
+  <meta name="description" content="Time-sensitive announcements from your Twitter friends. Summarized, prioritized, and delivered to your email inbox every morning. Conferences &amp; Events, Concerts &amp; Parties, Casual Social Plans, Important Deadlines">
+  <meta name="keywords" content="personal assistant, friend, social, plan, calendar, schedule, organize, meet, share, email">
+
+    
+    
+    <title>Rally - Events, Plans, Reminders - Time-sensitive announcements from Twitter friends</title>
+
+    
+  
+  <script type="text/javascript" async="" src="./About Rally - Events, Plans, Reminders - Time-sensitive announcements from Twitter friends_files/ga.js"></script><script src="./About Rally - Events, Plans, Reminders - Time-sensitive announcements from Twitter friends_files/jsapi" type="text/javascript"></script>
+  <script src="./About Rally - Events, Plans, Reminders - Time-sensitive announcements from Twitter friends_files/jquery.min.js"></script>
+  <script>
+    
+
+/* jQuery jqEasyCharCounter plugin
+ * Examples and documentation at: http://www.jqeasy.com/
+ * Version: 1.0 (05/07/2010)
+ * No license. Use it however you want. Just keep this notice included.
+ * Requires: jQuery v1.3+
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+(function($) {
+
+$.fn.extend({
+    jqEasyCounter: function(givenOptions) {
+        return this.each(function() {
+            var $this = $(this),
+                options = $.extend({
+                                        maxChars: "basePlanMaxChars",
+                                        maxChars: 144,
+					maxCharsWarning: 80,
+					msgFontSize: '12px',
+					msgWarningColor: '#F00',
+                                        msgFontColor:'#000',
+					msgAppendMethod: 'insertAfter'
+                }, givenOptions);
+	
+			if($(window).attr(options.maxChars) <= 0) return;
+			
+			// create counter element
+			var jqEasyCounterMsg = $("<div class=\"jqEasyCounterMsg\">&nbsp;</div>");
+			var jqEasyCounterMsgStyle = {
+				'color' : options.msgFontColor,
+			};
+			jqEasyCounterMsg.css(jqEasyCounterMsgStyle);
+			// append counter element to DOM
+			jqEasyCounterMsg[options.msgAppendMethod]($this);
+			
+			// bind events to this element
+			$this
+				.bind('keydown keyup keypress', doCount)
+				.bind('focus paste', function(){setTimeout(doCount, 10);});
+			
+			function doCount(){
+				var val = $this.val(),
+					length = val.length
+				
+				
+				
+				if(length >= options.maxCharsWarning){
+					jqEasyCounterMsg.css({"color" : options.msgWarningColor});
+				}else {
+					jqEasyCounterMsg.css({"color" : options.msgFontColor});
+				};
+				
+				jqEasyCounterMsg.html($(window).attr(options.maxChars)-$this.val().length);
+                jqEasyCounterMsg.stop().fadeTo( 'fast', 1);
+			};
+        });
+    }
+});
+
+})(jQuery);
+
+
+  </script>
+
+  
+  <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  
+  <script type="text/javascript">
+      $(document).ready(function() {
+        
+  $("#twitterSignIn").click(function(e)
+    {
+      e.preventDefault();
+      $.get("http://rallyplan.com/api/headsUp",{path:$(location).attr("href")});
+      window.open('http://rallyplan.com/twitter/authenticate/', 'Rally Twitter Login', 'height=500,width=800,scrollbars,resizable,status,location');
+    }
+  );
+
+      });
+  </script>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-22009385-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+    
+  <link rel="shortcut icon" href="http://s3.amazonaws.com/rally_img/rallyFavicon.ico">
+
+    
+  <style type="text/css">
+    
+
+  
+  .body {
+    font:12px/18px "Lucida Grande","Lucida Sans Unicode",Arial,Sans-serif;
+    color:#334455;
+    background-color:#d4d7de;
+    background-image:url("http://s3.amazonaws.com/rally_img/rlbg.png");
+    background-repeat: repeat-x;
+    line-height:15px;
+    padding:0px;
+    margin:0px auto;
+  }
+
+
+  a img {
+    border:none;
+  }
+  a {
+    color:#001199;text-decoration:none;
+  }
+  a:hover {
+    color:#4444ee;
+  }
+  ul {
+    margin:0px;
+    padding:0px;
+    list-style:none outside none;
+  }
+  h1,h2,h3 {
+    padding:0px;margin:0px 0px 0px 0px;
+  }
+  div,form,input,textarea,img {
+    padding:0px; margin:0px;
+  }
+  div,section,header,footer {
+    overflow:hidden;
+  }
+  .left {
+    float:left;
+  }
+  .right {
+    float:right;
+  }
+  .leftColumn {
+    float:left;
+    clear:left;
+  }
+  .rightColumn {
+    float:right; 
+    clear:right;
+  }
+  .center {
+    text-align:center;
+  }
+  .clear {
+    clear:both;
+  }
+  .bold {
+    font-weight:bold;
+  }
+  .hidden {
+    display:none;
+  }
+  .tbrd {
+    border: 1px solid #bbbbbb;
+  }
+
+    
+  
+  .header {
+    padding-top:2px;
+    padding-bottom:5px;
+    background-image: url('http://s3.amazonaws.com/rally_img/header_gradient.png');
+    background-repeat: repeat-x;
+    background-color:#222;
+    border-bottom:4px solid #111;
+  }
+  .subheader {
+    padding:10px 0px;
+    background-color:#456;
+    border-bottom:4px solid #333;
+   }
+  .subheader a {
+    font-size:16px;
+    color:#ddeeff;
+    line-height:20px;
+    font-weight:bold;
+  }
+  .pageMetro {
+    width:100px;
+    float:left;
+    clear:left;
+    line-height:20px;
+    font-size:16px;
+    color:#ff6600;
+    font-weight:bold;
+  }
+  .navMetro {
+    float:right;
+    clear:right;
+  }
+  .subheader li {
+    display: inline;
+    padding:0px 38px;
+    list-style-type: none;
+  }
+  .innerHeader {
+    width:1122px;
+    padding:0px 34px;
+    margin:0px auto 0px auto;
+  }
+  .logo {
+    margin:11px 0px 7px 0px;
+  }
+  .headerMetro {
+    line-height:26px;
+    font-size:14px;
+    color:#eeeeee;
+  }
+  .globalNav {
+    margin-top:14px;
+  }
+  .globalNavItem a {
+    color:#ccddee;
+    font-size:14px;
+    font-weight:bold;
+  }
+  .globalNavItem {
+    margin:0px 0px 0px 60px;
+    line-height:18px;
+  }
+  .headerUserFullname {
+    font-size:13px;
+    font-weight:bold;
+    color:#ffffff;
+    margin-top:1px;
+  }
+  .headerSignOut {
+    margin-top:1px;
+    margin-left:9px;
+  }
+  .headerSignOut a {
+    padding:0px;
+    font-size:10px;
+  }
+
+
+    
+  .bodyContent {
+    width:1164px;
+    padding:0px 34px;
+    margin:10px auto;
+  }
+
+    
+  
+  .bodyContent {
+    width:1100px;
+  }
+  .aboutTOC {
+    margin-top:20px;
+    font-size:16px;
+    line-height:22px;
+    float:left;
+    clear:left;
+    width:600px;
+  }
+  .aboutTOC h1 {
+    font-size:22px;
+    line-height:30px;
+  }
+  .aboutTOC h2 {
+    font-size:16px;
+    line-height:22px;
+    font-weight:bold;
+  }
+  .aboutRight {
+    float:right;
+    clear:right;
+    width:400px;
+  }
+  
+  .publicWelcome {
+    font-size:14px;
+    font-weight:bold;
+    text-align:center;
+    line-height:20px;
+    background-image:url('http://s3.amazonaws.com/rally_img/trbg.png');
+    background-repeat:none;
+    width:500px;
+    margin:0px auto 10px auto;
+
+  }
+  .publicWelcome img {
+    margin-bottom:16px;
+  }
+  .publicWelcome a {
+    line-height:0px;
+    overflow:hidden;
+  }
+  .publicWelcomeHeader {
+    color:#333344;
+    font-size:16px;
+    width:430px;
+    margin:0 auto;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+  }
+  .publicWelcomeBody {
+    background-image:url('http://s3.amazonaws.com/rally_img/signinbg2.png');
+    font-size:14px;
+    width:390px;
+    font-weight:bold;
+    text-align:center;
+    line-height:24px;
+    padding-top:10px;
+    padding-bottom:5px;
+    margin:5px auto 10px auto;
+    height:130px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+  }
+  .publicWelcomeLine {
+    width:160px;
+    padding:12px 10px 10px 10px;
+  }
+  .publicWelcomeLineLeft img {
+    margin-top:2px;
+  }
+  .publicWelcomeLineRight img {
+    margin-bottom:15px;
+  }
+  .publicWelcomeLineRight {
+    color:#111111;
+    margin-top:4px;
+  }
+  .pwlborder {
+    border-right:1px solid #667788;
+  }
+  .publicWelcomeLineLogo {
+    width:120px;
+    margin:0px auto;
+  }
+  .publicWelcomeLineDesc {
+    text-align:center;
+    color:#111122;
+    margin:0px auto;
+    margin-left:auto;
+    margin-right:auto;
+    width:160px;
+  }
+  .publicWelcomeLineSpacer {
+    width:180px;
+    height:10px;
+    margin:0px auto 10px auto;
+    border-bottom:1px solid #777788;
+  }
+  .publicWelcomeMsg {
+    color:#111122;
+    padding-top:10px;
+    margin-bottom:10px;
+  }
+  .publicWelcomeFooter {
+    color:#333344;
+    font-size:18px;
+  }
+
+
+  
+  .metroControl li {
+    float:left;
+    display: inline;
+    padding:0px 40px;
+    list-style-type: none;
+  }
+  .metroControl {
+    width:1200px;
+    margin:0 auto 15px auto;
+    padding:10px;
+  }
+  .metroControl h2, .metroControl a {
+    font-weight:bold;
+    font-size:16px;
+  }
+
+  
+  .aboutControl {
+    padding-top:20px;
+    float:right;
+    clear:right;
+    width:440px;
+    margin-bottom:140px;
+  }
+  .aboutText {
+    padding-top:30px;
+    float:left;
+    clear:left;
+    width:660px;
+    margin-bottom:140px;
+  }
+  .landingTitle {
+    text-align:center;
+  }
+  .landingSignIn {
+    text-align:center;
+  }
+
+  
+  .landing {
+    width:1164px;
+    margin-bottom:0px;
+  }
+  .landingLeft {
+    padding-left:50px;
+    float:left;
+    clear:left;
+    width:504px;
+    text-align:center;
+  }
+  .landingRight {
+    float:right;
+    clear:right;
+    width:606px;
+    height:700px;
+    background-image:url("http://s3.amazonaws.com/rally_img/rally_ipad.png");
+    background-repeat:no-repeat;
+  }
+  .landingTitle {
+    margin-top:70px;
+    margin-bottom:30px;
+  }
+  .landingTitle img {
+    height:22px;
+    margin-bottom:20px;
+  }
+  .landingTitle h1, .landingTitle h2 {
+    font-size:22px;
+    line-height:32px;
+  }
+  .landingSignIn {
+margin-top:40px; 
+  }
+  .landingTitleList {
+    font-size:18px;
+  }
+  .lm {
+    line-height:28px;
+    font-size:18px;
+  }
+  #twitterSignIn img {
+    height:48px;
+  }
+  .landingFooter {
+    margin-top:20px;
+  }
+  .landingFooter a {
+    font-weight:bold;
+    font-size:14px;
+  }
+
+
+  </style>
+
+  </head>
+
+    
+  <body class="body">
+    
+
+    
+  <div class="bodyContent">
+    <div class="aboutText">
+      <a href="http://rallyplan.com/" title="Rally - Events, Plans, Reminders - Time-sensitive announcements from Twitter friends">
+        <b style="font-size:14px">Back to Rally Home</b>
+      </a>
+      <br><br>
+      
+  <div class="aboutTOC">
+    <h1>About Rally</h1><br>
+    <br>
+    <h2>What is Rally?<br><br>
+        <em>A daily email service that delivers time-sensitive information from your Twitter friends - announcements, events, plans, reminders, etc.</em></h2>
+    <p>
+      Rally monitors your Twitter stream looking for messages about future events and plans. It summarizes important information about each event: what your friends are saying about it, the location, external links for more information.  A schedule of upcoming events in your network or location is available anytime at rallyplan.com. The Rally Report is a morning email update of the most important events occurring that day.
+    <br>
+    </p>
+    <br>
+    <h2>How do I use Rally?<br><br>
+        <em>Use Rally to make last-minute planning more effective.  Start each day knowing what social events are going on among your friends.</em></h2>
+    <p>
+      Getting started is easy: Sign up and opt in to the Rally Report.  Rally will start monitoring your Twitter stream and you'll receive your first update the following morning.  Your friends having plans that day are summarized at the top of the email - click on a photo to view that person's plans.  The top plans are prioritized by number of your friends involved.  Click on a friend's photo above a plan to see their comments.
+    <br>
+    </p>
+    <br>
+
+    <h2>Who are the team behind Rally?<br><br>
+    <a href="http://marksoper.net/"><em>Mark Soper</em></a><br></h2>
+    <p>
+      Please send thoughts, questions, and any other feedback<br> to <a href="http://twitter.com/marksoper">@marksoper</a> or <a href="http://marksoper.net/contact">contact Mark here</a><br>
+    <br>
+    </p>
+  </div>
+
+    </div>
+    <div class="aboutControl">
+      
+      <div class="landingTitle">
+        <h1>
+          <img src="./About Rally - Events, Plans, Reminders - Time-sensitive announcements from Twitter friends_files/rallyLogo18.png" alt="Rally Logo"><br>
+	  Time-sensitive announcements<br>
+	  from your Twitter friends<br>
+          <br>
+	  Summarized, prioritized, and delivered <br>
+	  to your email inbox every morning<br>
+          <br>
+	  <span class="landingTitleList">
+	  Business &amp; Entertainment Events<br>
+	  Social Plans: Concerts, Sports, Parties, Travel<br>
+	  Important Deadlines and Reminders<br>
+          </span>
+        </h1>
+
+      </div>
+
+      <div class="landingSignIn">
+        <a href="http://rallyplan.com/Sign%20In%20With%20Twitter" id="twitterSignIn">
+	  <img src="./About Rally - Events, Plans, Reminders - Time-sensitive announcements from Twitter friends_files/tauth2.png" height="36">
+        </a>
+      </div>
+
+    </div>
+    
+  <div class="metroControl">
+    <ul>
+  
+    <li class="metroLI">
+      <a href="http://rallyplan.com/metro/boston" title="Rally Boston - Events, Concerts, Plans, Deadlines - Time-sensitive announcements from Twitter friends">
+        Boston
+      </a>
+    </li>
+    <li class="metroLI">
+      <a href="http://rallyplan.com/metro/chicago" title="Rally Chicago - Events, Concerts, Plans, Deadlines - Time-sensitive announcements from Twitter friends">
+        Chicago
+      </a>
+    </li>
+    <li class="metroLI">
+      <a href="http://rallyplan.com/metro/los%20angeles" title="Rally Los Angeles - Events, Concerts, Plans, Deadlines - Time-sensitive announcements from Twitter friends">
+        Los Angeles
+      </a>
+    </li>
+    <li class="metroLI">
+      <a href="http://rallyplan.com/metro/new%20york" title="Rally New York - Events, Concerts, Plans, Deadlines - Time-sensitive announcements from Twitter friends">
+        New York
+      </a>
+    </li>
+    <li class="metroLI">
+      <a href="http://rallyplan.com/metro/san%20francisco" title="Rally San Francisco - Events, Concerts, Plans, Deadlines - Time-sensitive announcements from Twitter friends">
+        San Francisco
+      </a>
+    </li>
+    <li class="metroLI">
+      <a href="http://rallyplan.com/metro/seattle" title="Rally Seattle - Events, Concerts, Plans, Deadlines - Time-sensitive announcements from Twitter friends">
+        Seattle
+      </a>
+    </li>
+    <li class="metroLI">
+      <a href="http://rallyplan.com/metro/washington%20dc" title="Rally Washington DC - Events, Concerts, Plans, Deadlines - Time-sensitive announcements from Twitter friends">
+        Washington DC
+      </a>
+    </li>
+    </ul>
+  </div>
+
+  </div>
+
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body></html>
