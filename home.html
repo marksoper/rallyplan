@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<!-- saved from url=(0021)http://rallyplan.com/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+  <meta charset="utf-8">
+  <meta name="description" content="Time-sensitive announcements from your Twitter friends. Summarized, prioritized, and delivered to your email inbox every morning. Conferences &amp; Events, Concerts &amp; Parties, Casual Social Plans, Important Deadlines">
+  <meta name="keywords" content="personal assistant, friend, social, plan, calendar, schedule, organize, meet, share, email">
+
+    
+    
+      <title>Rally - Events, Plans, Reminders - Time-sensitive announcements from Twitter friends</title>
+
+    
+  
+  <script type="text/javascript" async="" src="./Rally - Events, Plans, Reminders - Time-sensitive announcements from Twitter friends_files/ga.js"></script><script src="./Rally - Events, Plans, Reminders - Time-sensitive announcements from Twitter friends_files/jsapi" type="text/javascript"></script>
+  <script src="./Rally - Events, Plans, Reminders - Time-sensitive announcements from Twitter friends_files/jquery.min.js"></script>
+  <script>
+    
+
+/* jQuery jqEasyCharCounter plugin
+ * Examples and documentation at: http://www.jqeasy.com/
+ * Version: 1.0 (05/07/2010)
+ * No license. Use it however you want. Just keep this notice included.
+ * Requires: jQuery v1.3+
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+(function($) {
+
+$.fn.extend({
+    jqEasyCounter: function(givenOptions) {
+        return this.each(function() {
+            var $this = $(this),
+                options = $.extend({
+                                        maxChars: "basePlanMaxChars",
+                                        maxChars: 144,
+					maxCharsWarning: 80,
+					msgFontSize: '12px',
+					msgWarningColor: '#F00',
+                                        msgFontColor:'#000',
+					msgAppendMethod: 'insertAfter'
+                }, givenOptions);
+	
+			if($(window).attr(options.maxChars) <= 0) return;
+			
+			// create counter element
+			var jqEasyCounterMsg = $("<div class=\"jqEasyCounterMsg\">&nbsp;</div>");
+			var jqEasyCounterMsgStyle = {
+				'color' : options.msgFontColor,
+			};
+			jqEasyCounterMsg.css(jqEasyCounterMsgStyle);
+			// append counter element to DOM
+			jqEasyCounterMsg[options.msgAppendMethod]($this);
+			
+			// bind events to this element
+			$this
+				.bind('keydown keyup keypress', doCount)
+				.bind('focus paste', function(){setTimeout(doCount, 10);});
+			
+			function doCount(){
+				var val = $this.val(),
+					length = val.length
+				
+				
+				
+				if(length >= options.maxCharsWarning){
+					jqEasyCounterMsg.css({"color" : options.msgWarningColor});
+				}else {
+					jqEasyCounterMsg.css({"color" : options.msgFontColor});
+				};
+				
+				jqEasyCounterMsg.html($(window).attr(options.maxChars)-$this.val().length);
+                jqEasyCounterMsg.stop().fadeTo( 'fast', 1);
+			};
+        });
+    }
+});
+
+})(jQuery);
+
+
+  </script>
+
+  
+  <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  
+  <script type="text/javascript" src="./Rally - Events, Plans, Reminders - Time-sensitive announcements from Twitter friends_files/date.js"></script>
+  <script type="text/javascript">
+      $(document).ready(function() {
+        
+  
+
+  function showFriendPlans(friend) {
+      var sec = $(friend).parents(".baseSection")
+      var header = $(sec).children(".baseSectionBodyHeader")
+      var planstr = $(friend).attr("plans");
+      var friend_id = $(friend).attr("friend_id");
+      var friendlink = $(friend).attr("friendlink");
+      var friendtitle = $(friend).attr("fullname") + " on Twitter";
+      var fullname = $(friend).attr("fullname");
+      var image_url = $(friend).attr("image_url");
+      var plans = $(planstr);
+
+     
+      $(plans).each(function(i) {
+        $(friend).find(".visible").removeClass("visible").addClass("hidden");
+        $(friend).find("#latestStatusBy__" + friend_id).removeClass("hidden").addClass("visible");
+      });
+      
+
+      var plancount = plans.length;
+      if (plancount == 1)
+        { plancountstr = "1 Plan" } else
+        { plancountstr = plancount + " Plans" };
+      var bod = $(sec).children(".baseSectionBody")[0];
+      var allplans = $(bod).children(".basePlan");
+      $(allplans).addClass("hidden").removeClass("visible");
+      $(plans).addClass("visible").removeClass("hidden");
+      $(header).removeClass("hidden").addClass("visible");
+      $(header).find(".baseSectionBodyHeaderFriendPlanCount").html(plancountstr);
+      $(header).find(".baseSectionBodyHeaderFriendImage").attr("src",image_url);
+      $(header).find(".baseSectionBodyHeaderFriendFullname").html(fullname);
+      $(header).find(".baseSectionBodyHeaderFriendLink").attr("href",friendlink);
+      $(header).find(".baseSectionBodyHeaderFriendLink").attr("title",friendtitle);
+  }
+
+
+  $(".baseSectionSummaryFriend").live("click", function(e)
+    {
+      e.preventDefault();
+      showFriendPlans(this);
+    }
+   );
+
+  
+  $(".baseSectionSummaryAllPlanLink").live("click", function(e)
+    {
+      e.preventDefault();
+      var sec = $(this).parents(".baseSection");
+      var header = $(sec).children(".baseSectionBodyHeader");     
+      var bod = $(sec).children(".baseSectionBody")[0];
+      var allplans = $(bod).children(".basePlan");
+      $(allplans).removeClass("hidden").addClass("visible");
+      $(header).removeClass("visible").addClass("hidden");
+    }
+  );
+
+
+        
+  $(".basePlanPeopleImageLink").live("click",
+    
+   function(e)
+   {
+     e.preventDefault();
+     var parts = this.id.split("__");
+     var plan = $("#basePlan__" + parts[1]);
+     plan.find(".visible").removeClass("visible").addClass("hidden");
+     plan.find("#latestStatusBy__" + parts[2]).removeClass("hidden").addClass("visible");
+   }
+
+  );
+  
+  $(".basePlanCommentSendButton").click(function(e)
+    {
+      e.preventDefault();
+      var plan = $(this).parents(".basePlan")[0];
+      var original_visible_status = $(plan).find(".baseStatus.visible");
+      var commentStatus = $(plan).find(".commentStatus")[0];
+      var user_id = $(commentStatus).attr("user_id");
+      var plan_id = $(commentStatus).attr("plan_id");
+      var plan_type = $(plan).attr("type");
+      var status_id = $(commentStatus).attr("status");
+      var text = $(commentStatus).find(".commentStatusBody")[0].value;
+      $.get("http://rallyplan.com/api/sendComment", { "author" : user_id, "plan" : plan_id, "text" : text, "type" : plan_type, "status_id" : status_id },
+          function(data){
+              var error = true;
+              msg = "Error on our end. Message not sent. Sorry. Please help me fix it. Send me an email at masoper@gmail.com";
+              if (data.substring(0,3) == "401") {
+                  msg = 'Session ended - please <a href="http://rallyplan.com/">login</a> and try again'
+              } else if (data.length > 10) {
+                  error = false;
+                  msg = data;
+              } else {}
+              if (error == true) {
+                  $("#basePlanCommentResultMsg").html(msg);
+              } else {
+                  $(original_visible_status).removeClass("visible").addClass("hidden");
+                  $(plan).children(".basePlanInput").addClass("hidden");
+                  $(plan).find(".commentStatusBody").val("");
+                  var statuses = $(plan).find(".basePlanStatuses")[0];
+                  var user_images = $(plan).find(".basePlanPeopleImages")[0];
+                  var new_status = $(data).find(".sendCommentResponse__baseStatus").html();
+                  var user_image = $(data).find(".sendCommentResponse__planPeopleImage").html();
+                  $(user_images).html(user_image + $(user_images).html());
+                  $(statuses).html(new_status + $(statuses).html());
+              }
+              $("#createPlanResultMsg").removeClass("hidden").addClass("visible");
+      });
+    }
+  );
+
+  
+  $(".basePlanCommentLink").click(function(e)
+    {
+      e.preventDefault();
+      var plan = $(this).parents(".basePlan");
+      var plan_type = $(plan).attr("type");
+      var commentStatus = $(plan).find(".commentStatus")[0];
+      $(plan).addClass("basePlanInputActive").removeClass("basePlanHover");
+      $(plan.children(".basePlanInput")[0]).removeClass("hidden");
+      if (plan_type == "solo") {
+          $.get("http://rallyplan.com/api/assignPlan", {},
+                     function(data){
+                       var plan_id = data.split("||")[0];
+                       var plan_alpha_id = data.split("||")[1];
+                       $(commentStatus).attr("plan_id",plan_id);
+                       var cmnt = $(commentStatus).find(".commentStatusBody")[0];
+                       var premsg = $(cmnt).val().replace("\n",'').replace("\r",'');
+                       $(cmnt).val(premsg + " http://rl.ly/" + plan_alpha_id);
+                  });
+      }
+  });
+
+  
+  $(".basePlanCommentCancelButton").click(function(e)
+    {
+      e.preventDefault();
+      var plan = $(this).parents(".basePlan");
+      $(plan).children(".basePlanInput").addClass("hidden");
+      $(plan).removeClass("basePlanInputActive");
+    }
+  );
+
+  
+  window.basePlanMaxChars = 140;
+  $(".basePlanCommentStatus .commentStatusBody").jqEasyCounter({
+      "maxChars": "basePlanMaxChars",
+      "maxCharsWarning":window.basePlanMaxChars,
+      "msgFontColor": "#777777",
+      "msgWarningColor": "#F00",
+      "msgAppendMethod": "insertAfter"     
+      });
+
+
+          
+  $("#twitterSignIn").click(function(e)
+    {
+      e.preventDefault();
+      $.get("http://rallyplan.com/api/headsUp",{path:$(location).attr("href")});
+      window.open('http://rallyplan.com/twitter/authenticate/', 'Rally Twitter Login', 'height=500,width=800,scrollbars,resizable,status,location');
+    }
+  );
+
+      });
+  </script>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-22009385-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+    
+  <link rel="shortcut icon" href="http://s3.amazonaws.com/rally_img/rallyFavicon.ico">
+
+    
+  <style type="text/css">
+    
+
+  
+  .body {
+    font:12px/18px "Lucida Grande","Lucida Sans Unicode",Arial,Sans-serif;
+    color:#334455;
+    background-color:#d4d7de;
+    background-image:url("http://s3.amazonaws.com/rally_img/rlbg.png");  
+    background-repeat: repeat-x;
+    line-height:15px;
+    padding:0px;
+    margin:0px auto;
+  }
+
+
+  a img {
+    border:none;
+  }
+  a {
+    color:#001199;text-decoration:none;
+  }
+  a:hover {
+    color:#4444ee;
+  }
+  ul {
+    margin:0px;
+    padding:0px;
+    list-style:none outside none;
+  }
+  h1,h2,h3 {
+    padding:0px;margin:0px 0px 0px 0px;
+  }
+  div,form,input,textarea,img {
+    padding:0px; margin:0px;
+  }
+  div,section,header,footer {
+    overflow:hidden;
+  }
+  .left {
+    float:left;
+  }
+  .right {
+    float:right;
+  }
+  .leftColumn {
+    float:left;
+    clear:left;
+  }
+  .rightColumn {
+    float:right; 
+    clear:right;
+  }
+  .center {
+    text-align:center;
+  }
+  .clear {
+    clear:both;
+  }
+  .bold {
+    font-weight:bold;
+  }
+  .hidden {
+    display:none;
+  }
+  .tbrd {
+    border: 1px solid #bbbbbb;
+  }
+
+    
+  
+  .header {
+    padding-top:2px;
+    padding-bottom:5px;
+    background-image: url('http://s3.amazonaws.com/rally_img/header_gradient.png');
+    background-repeat: repeat-x;
+    background-color:#222;
+    border-bottom:4px solid #111;
+  }
+  .subheader {
+    padding:10px 0px;
+    background-color:#456;
+    border-bottom:4px solid #333;
+   }
+  .subheader a {
+    font-size:16px;
+    color:#ddeeff;
+    line-height:20px;
+    font-weight:bold;
+  }
+  .pageMetro {
+    width:100px;
+    float:left;
+    clear:left;
+    line-height:20px;
+    font-size:16px;
+    color:#ff6600;
+    font-weight:bold;
+  }
+  .navMetro {
+    float:right;
+    clear:right;
+  }
+  .subheader li {
+    display: inline;
+    padding:0px 38px;
+    list-style-type: none;
+  }
+  .innerHeader {
+    width:1122px;
+    padding:0px 34px;
+    margin:0px auto 0px auto;
+  }
+  .logo {
+    margin:11px 0px 7px 0px;
+  }
+  .headerMetro {
+    line-height:26px;
+    font-size:14px;
+    color:#eeeeee;
+  }
+  .globalNav {
+    margin-top:14px;
+  }
+  .globalNavItem a {
+    color:#ccddee;
+    font-size:14px;
+    font-weight:bold;
+  }
+  .globalNavItem {
+    margin:0px 0px 0px 60px;
+    line-height:18px;
+  }
+  .headerUserFullname {
+    font-size:13px;
+    font-weight:bold;
+    color:#ffffff;
+    margin-top:1px;
+  }
+  .headerSignOut {
+    margin-top:1px;
+    margin-left:9px;
+  }
+  .headerSignOut a {
+    padding:0px;
+    font-size:10px;
+  }
+
+
+    
+  .bodyContent {
+    width:1164px;
+    padding:0px 34px;
+    margin:10px auto;
+  }
+
+    
+    
+  .landing {
+    width:1164px;
+    margin-bottom:0px;
+  }
+  .landingLeft {
+    padding-left:50px;
+    float:left;
+    clear:left;
+    width:504px;
+    text-align:center;
+  }
+  .landingRight {
+    float:right;
+    clear:right;
+    width:606px;
+    height:700px;
+    background-image:url("http://s3.amazonaws.com/rally_img/rally_ipad.png");
+    background-repeat:no-repeat;
+  }
+  .landingTitle {
+    margin-top:70px;
+    margin-bottom:30px;
+  }
+  .landingTitle img {
+    height:22px;
+    margin-bottom:20px;
+  }
+  .landingTitle h1, .landingTitle h2 {
+    font-size:22px;
+    line-height:32px;
+  }
+  .landingSignIn {
+margin-top:40px; 
+  }
+  .landingTitleList {
+    font-size:18px;
+  }
+  .lm {
+    line-height:28px;
+    font-size:18px;
+  }
+  #twitterSignIn img {
+    height:48px;
+  }
+  .landingFooter {
+    margin-top:20px;
+  }
+  .landingFooter a {
+    font-weight:bold;
+    font-size:14px;
+  }
+
+    
+  .metroControl li {
+    float:left;
+    display: inline;
+    padding:0px 40px;
+    list-style-type: none;
+  }
+  .metroControl {
+    width:1200px;
+    margin:0 auto 15px auto;
+    padding:10px;
+  }
+  .metroControl h2, .metroControl a {
+    font-weight:bold;
+    font-size:16px;
+  }
+
+    
+  .bodyWrapper {
+
+  }
+  .leftIndexColumn {
+    float:left;
+    clear:left;
+    width:606px;
+    padding-right:30px;
+    border-right:1px solid #334455;
+  }
+  .rightIndexColumn {
+    margin-top:5px;
+    padding-left:20px;
+    float:right;
+    clear:right;
+    width:506px;
+  }
+
+    
+  .baseSection {
+    margin:10px auto;
+  }
+  .baseSection mainSection {
+    width:586px;
+  }
+  .baseSection sideSection {
+    width:486px;
+  }
+  .baseSectionTitle {
+    margin-bottom:8px;
+  }
+  .baseSectionHeader {
+    font-weight:bold;
+    font-size:14px;
+    line-height:18px;
+    color:#ffffff;
+    border-bottom:4px solid #111122;
+    border-right:4px solid #111122;
+    border-top:2px solid #333344;
+    border-left:2px solid #333344;
+    margin-left:auto;
+    margin-right:auto;
+    margin-bottom:8px;
+    background-repeat: repeat-x;
+    background-color:#334455;
+
+    padding:5px 15px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-box-shadow: 0px 0px 2px #aaaaaa;
+    -webkit-box-shadow: 0px 0px 2px #aaaaaa;
+  }
+  .baseSectionSummary {
+    padding:15px 15px 12px 15px;
+    margin-bottom:12px;
+    background-image: url('http://s3.amazonaws.com/rally_img/friendsGradient2.png');
+    background-repeat: repeat-x;
+    border-bottom:4px solid #667788;
+    border-right:4px solid #667788;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-box-shadow: 0px 0px 2px #aaaaaa;
+    -webkit-box-shadow: 0px 0px 2px #aaaaaa;
+  }
+  .baseSectionSummary:hover {
+    background-image: none;
+    background-repeat: none;
+    background-color:#eeeeff;
+  }
+  .baseSectionStats {
+    font-weight:bold;
+    font-size:12px;
+    color:#667788;
+    width:100%;
+    position:relative;
+    z-index:1;
+    float:left;
+    clear:both;
+    text-align:center;
+    margin:0px auto 6px auto;
+  }
+  .baseSectionSummaryFriendImage {
+    height:36px;
+    width:36px;
+  }
+  .baseSectionControls {
+    font-weight:bold;
+    font-size:16px;
+    margin-top:6px;
+    color:#fff;
+  }
+  .baseSectionControls a {
+    font-size:13px;
+    color:#9cf;
+  }
+  .baseSectionControlsFilter {
+    width:160px;
+    margin-top:-20px;
+    float:left;
+    clear:left;
+    position:relative;
+    z-index:2;
+   }
+  .baseSectionControlsSort {
+    width:160px;
+    text-align:right;
+    margin-top:-20px;
+    float:right;
+    clear:right;
+    position:relative;
+    z-index:2;
+  }
+  .baseSectionBody {
+   }
+  .baseSectionBodyHeader {
+    font-size:14px;
+    font-weight:bold;
+    margin-bottom:5px;
+    background-color:#e4e9f4;
+    border:4px solid #d4d9e4;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-box-shadow: 0px 0px 2px #aaaaaa;
+    -webkit-box-shadow: 0px 0px 2px #aaaaaa;
+  }
+  .baseSectionBodyHeaderFilterDetails {
+    padding:10px 15px 14px 17px;
+  }
+  .baseSectionBodyHeaderFilterClear {
+    padding:6px 15px;
+  }
+  .baseSectionBodyHeaderFriendImage {
+    margin-bottom:-7px;
+    margin-right:2px;
+    width:24px;
+    height:24px;
+  }
+  .baseSectionBodyHeaderFriendFullname {
+  }
+
+    
+  .baseStatus {
+    margin:0px 0px 5px 0px;
+    padding:0px;
+    position:relative;
+  }
+  .baseStatusAuthor , .commentStatusAuthor {
+    float:left;
+    clear:left;
+  }
+  .commentStatusAuthor {
+    margin-top:10px;
+  }
+  .baseStatusAuthorImageWrapper {
+    margin:2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-box-shadow: 0px 2px 2px #aaaaaa;
+    -webkit-box-shadow: 0px 2px 2px #aaaaaa;
+  }
+  .baseStatusBody, .commentStatusBody {
+    font-size:14px;
+    line-height:18px;
+    background-color: #ffffff;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    padding:10px;
+    float:right;
+    clear:right;
+  }
+  .baseStatusBody {
+    margin:2px;
+    border: 1px solid #acb5d4;
+  }
+  .commentStatusBody {
+    margin:5px;
+    border: 1px solid #111122;
+    height:60px;
+  }
+  .baseStatusBodyAuthor {
+    float:left;
+    clear:left;
+  }
+  .baseStatusBodyAuthorLink {
+    font-weight:bold;
+  }
+  .baseStatusBodyPosted {
+    color:#666666;
+    font-size:10px;
+    float:right;
+    clear:right;
+  }
+  .baseStatusBodyText {
+    color:#334455;
+    padding-top:2px;
+  }
+
+    
+  .basePlan {
+    padding:9px 15px;
+    border-right:4px solid #f3f4f5;
+    border-left:4px solid #f3f4f5;
+    border-bottom:4px solid #f3f4f5;
+    border-top:1px solid #c9d1d6;
+    margin:5px auto 5px auto;
+    background-image: url('http://s3.amazonaws.com/rally_img/planGradient.png');
+    background-repeat: repeat-x; 
+    background-color:#c9d1d6;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-box-shadow: 0px 0px 2px #f3f4f5;
+    -webkit-box-shadow: 0px 0px 2px #f3f4f5;
+   }
+  .basePlan:hover {
+    border:4px solid #8899aa;
+  }
+  .basePlanInputActive {
+    background-image:none;
+    background-color:#aabbcc;
+    border:4px solid #556677;
+  }
+  .basePlanInputActive:hover {
+    background-color: #bbccdd;
+  }
+  .basePlanOwnPlan {
+    border:4px solid #ff9933;
+    -moz-box-shadow: 0px 0px 2px #d1d4d7;
+    -webkit-box-shadow: 0px 0px 2px #d1d4d7;
+  }
+  .basePlanThread {
+    float:left;
+    clear:left;
+  }
+  .basePlanMeta {
+    margin-top:3px;
+    float:right;
+    clear:right;
+  }
+  .basePlanHeader {
+    padding:5px 0px 7px 0px;
+  }
+  .basePlanTitle {
+    padding:0px 0px 5px 0px;
+    clear:left;
+    float:left;
+    line-height:20px;
+    font-size:16px;
+    font-weight:bold;
+  }
+  .basePlanPeople {
+    padding-bottom:2px;
+  }
+  .basePlanPeopleImages img {
+    margin:0px;
+    float:left;
+  }
+  .basePlanPeopleImage {
+    border:3px solid #eeeeee;
+    width:30px;
+    height:30px;
+  }
+  .basePlanPeopleImageFriendEffect {
+    border:3px solid orange;
+  }
+  .basePlanPeopleCount {
+    font-size:14px;
+    font-weight:bold;
+    margin-left:5px;
+    margin-right:5px;
+    float:left;
+    padding-bottom:1px;
+    border-bottom:2px solid #b4bbff;
+  }
+  .basePlanFriendsCount {
+    font-size:14px;
+    font-weight:bold;
+    margin-right:5px;
+    float:left;
+    padding-bottom:1px;
+    border-bottom:2px solid #ff8800;
+  }
+  .basePlanMetro {
+    padding:0px 0px 5px 0px;
+    font-size:12px;
+    font-weight:bold;
+    float:right;
+    clear:right;
+    text-align:right;
+  }
+  .basePlanDetails {
+    text-align:right;
+    float:right;
+  }
+  .basePlanDetails img {
+    width:32px;
+  }
+  .basePlanCommentLink {
+    text-align:right;
+    float:right;
+  }
+  .basePlanCommentLink img {
+    width:32px;
+  }
+  .basePlanActions  {
+    text-align:right;
+    margin:5px 0px;
+    text-align:left;
+    font-size:10px;
+  }
+  .basePlanCommentActions {
+    clear:right;
+    float:right;
+    margin-top:9px;
+  }
+  .basePlanCommentCancel, .basePlanCommentSend {
+  }
+  .basePlanCommentSend {
+  }
+  .basePlanCommentSend img {
+    height:26px;
+   }
+  .basePlanDate {
+    width:32px;
+    height:29px;
+    padding:2px 0px;
+    background-image:url('http://s3.amazonaws.com/rally_img/calBG2.png');
+    text-align:center;
+    float:right;
+  }
+  .basePlanDateMonth {
+    text-align:center;
+    clear:both;
+    color:#ffffff;
+    line-height:13px;
+    font-size:8px;
+  }
+  .basePlanDateDay {
+    color:#222222;
+    text-align:center;
+    clear:both;
+    font-weight:bold;
+    font-size:13px;
+    line-height:13px;
+    padding-bottom:2px;
+  }
+
+    
+  .basePlan .jqEasyCounterMsg {
+    float:left;
+    clear:left;
+    font-size:20px;
+    line-height:24px;
+    margin-left:60px;
+    margin-top:5px;
+    font-weight:bold;
+    width:80px;
+  }
+
+    
+
+  
+
+                  
+  .mainSection .baseStatus , .mainSection .commentStatus {
+     width:529px;
+   }
+
+
+  .mainSection .baseStatusAuthor , .mainSection .commentStatusAuthor {
+     width:58px;
+   }
+
+  .mainSection .baseStatusAuthorImageWrapper , .mainSection .commentStatusAuthorImageWrapper {
+     width:56px;
+     height:56px;
+   }
+
+  .mainSection .baseStatusAuthorImage , .mainSection .commentStatusAuthorImage {
+     width:56px;
+   }
+
+  .mainSection .baseStatusBody {
+     width:442px;
+   }
+
+  .mainSection .commentStatusBody {
+     width:438px;
+   }
+
+
+  
+
+  .mainSection .basePlan {
+  }
+
+  .mainSection .basePlanThread , .mainSection .basePlanComment {
+    width:529px;
+  }
+
+  .mainSection .basePlanStatuses {
+    width:529px;
+  }
+
+  .mainSection .basePlanMeta ,  .mainSection .basePlanActions  {
+    width:32px;
+  }
+
+  .mainSection .basePlanTitleWithMetro {
+    width:471px;
+  }
+  
+  .basePlanMetroWithTitle {
+    width:90px;
+  }
+
+
+  .mainSection .commentStatusBody {
+     width:438px;
+   }
+
+
+    
+
+  
+
+                  
+  .sideSection .baseStatus , .sideSection .commentStatus {
+     width:429px;
+   }
+
+
+  .sideSection .baseStatusAuthor , .sideSection .commentStatusAuthor {
+     width:58px;
+   }
+
+  .sideSection .baseStatusAuthorImageWrapper , .sideSection .commentStatusAuthorImageWrapper {
+     width:56px;
+     height:56px;
+   }
+
+  .sideSection .baseStatusAuthorImage , .sideSection .commentStatusAuthorImage {
+     width:56px;
+   }
+
+  .sideSection .baseStatusBody {
+     width:342px;
+   }
+
+  .sideSection .commentStatusBody {
+     width:338px;
+   }
+
+
+  
+
+  .sideSection .basePlan {
+  }
+
+  .sideSection .basePlanThread , .sideSection .basePlanComment {
+    width:429px;
+  }
+
+  .sideSection .basePlanStatuses {
+    width:429px;
+  }
+
+  .sideSection .basePlanMeta ,  .sideSection .basePlanActions  {
+    width:32px;
+  }
+
+  .sideSection .basePlanTitleWithMetro {
+    width:371px;
+  }
+  
+  .basePlanMetroWithTitle {
+    width:90px;
+  }
+
+
+  .sideSection .commentStatusBody {
+     width:338px;
+   }
+
+
+    
+  .calendar {
+    padding-top:10px;
+    margin-bottom:20px;
+  }
+  .calendarLeftMonth {
+    width:250px;
+    float:left;
+    clear:left;
+  }
+  .calendarRightMonth {
+    width:250px;
+    float:right;
+    clear:right;
+  }
+  .calendar table {
+    font-size: 15px;
+  }
+  .calendar td, th {
+    width: 36px;
+    vertical-align: middle;
+    color: #444;
+    position: relative;
+  }
+  .calendar td {
+    height: 36px;
+    text-align: center;
+  }
+  .calendar th {
+    height: 24px;
+    font-weight: bold;
+  }
+  .calendar td:hover, th:hover {
+    background-position: 0px -81px;
+    color: #222;
+  }
+  .calendar td.date_has_event {
+    background-position: 162px 0px;
+    color: white;
+  }
+  .calendar td.date_has_event:hover {
+    background-position: 162px -81px;
+  }
+  .calendar td.calendarBoxValue {
+  }
+  .calendar td.calendarBoxPadding {
+  }
+  .calendar td.today {
+    background-position: 81px 0px;
+    color: white;
+  }
+  .calendar td.today:hover {
+    background-position: 81px -81px;
+  }
+  .inactiveDayBox {
+    background-color:#eeeeee;
+  }
+  .calendar .count1 {
+    background-color:#ffeecc;
+  }
+  .calendar .count2 {
+    background-color:#ffddbb;
+  }
+  .calendar .count3__4 {
+    background-color:#ffcc99;
+  }
+  .calendar .count5__7 {
+    background-color:#ffbb77;
+  }
+  .calendar .count8__11 {
+    background-color:#ffaa55;
+  }
+  .calendar .count12__18 {
+    background-color:#ff9933;
+  }
+  .calendar .count19__25 {
+    background-color:#ff8811;
+  }
+  .calendar .count26__35 {
+    background-color:#ee7700;
+  }
+  .calendar .count36__49 {
+    background-color:#ee6600;
+  }
+  .calendar .count50__ {
+    background-color:#ee5500;
+  }
+  .publicCalendar .count1 {
+    background-color:#cceeff;
+  }
+  .publicCalendar .count2 {
+    background-color:#bbddff;
+  }
+  .publicCalendar .count3__4 {
+    background-color:#99ccff;
+  }
+  .publicCalendar .count5__7 {
+    background-color:#77bbff;
+  }
+  .publicCalendar .count8__11 {
+    background-color:#55aaff;
+  }
+  .publicCalendar .count12__18 {
+    background-color:#3399ff;
+  }
+  .publicCalendar .count19__25 {
+    background-color:#1188ff;
+  }
+  .publicCalendar .count26__35 {
+    background-color:#0077ee;
+  }
+  .publicCalendar .count36__49 {
+    background-color:#0066ee;
+  }
+  .publicCalendar .count50__ {
+    background-color:#0055ee;
+  }
+
+    
+  .publicWelcome {
+    font-size:14px;
+    font-weight:bold;
+    text-align:center;
+    line-height:20px;
+    background-image:url('http://s3.amazonaws.com/rally_img/trbg.png');
+    background-repeat:none;
+    width:500px;
+    margin:0px auto 10px auto;
+
+  }
+  .publicWelcome img {
+    margin-bottom:16px;
+  }
+  .publicWelcome a {
+    line-height:0px;
+    overflow:hidden;
+  }
+  .publicWelcomeHeader {
+    color:#333344;
+    font-size:16px;
+    width:430px;
+    margin:0 auto;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+  }
+  .publicWelcomeBody {
+    background-image:url('http://s3.amazonaws.com/rally_img/signinbg2.png');
+    font-size:14px;
+    width:390px;
+    font-weight:bold;
+    text-align:center;
+    line-height:24px;
+    padding-top:10px;
+    padding-bottom:5px;
+    margin:5px auto 10px auto;
+    height:130px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+  }
+  .publicWelcomeLine {
+    width:160px;
+    padding:12px 10px 10px 10px;
+  }
+  .publicWelcomeLineLeft img {
+    margin-top:2px;
+  }
+  .publicWelcomeLineRight img {
+    margin-bottom:15px;
+  }
+  .publicWelcomeLineRight {
+    color:#111111;
+    margin-top:4px;
+  }
+  .pwlborder {
+    border-right:1px solid #667788;
+  }
+  .publicWelcomeLineLogo {
+    width:120px;
+    margin:0px auto;
+  }
+  .publicWelcomeLineDesc {
+    text-align:center;
+    color:#111122;
+    margin:0px auto;
+    margin-left:auto;
+    margin-right:auto;
+    width:160px;
+  }
+  .publicWelcomeLineSpacer {
+    width:180px;
+    height:10px;
+    margin:0px auto 10px auto;
+    border-bottom:1px solid #777788;
+  }
+  .publicWelcomeMsg {
+    color:#111122;
+    padding-top:10px;
+    margin-bottom:10px;
+  }
+  .publicWelcomeFooter {
+    color:#333344;
+    font-size:18px;
+  }
+
+    
+  .createPlan {
+    padding:5px 15px 7px 15px;
+    margin-bottom:10px;
+    background-image: url('http://s3.amazonaws.com/rally_img/darkGradient.png');
+    background-color:#222222;
+    color:#778899;
+    background-repeat: repeat-x;
+    border:4px solid #111122;
+    -moz-box-shadow: 0px 0px 2px #d1d4d7;
+    -webkit-box-shadow: 0px 0px 2px #d1d4d7;
+  }
+  .createPlanHeaderTitle {
+    font-size:15px;
+    color:#ff8822;
+    margin-bottom:2px;
+    font-weight:bold;
+    line-height:22px;
+  }
+  .createPlanHide img {
+    margin-top:6px;
+    height:10px;
+  }
+  .createPlanExpanded {
+  }
+  .createPlanOtherFields {
+    width:466px;
+  }
+  .createPlanCommentActions {
+    width:100px;
+  }
+  .createPlanOptional {
+    clear:both;
+    padding:5px 0px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+  }
+  .createPlanOptionalHeader {
+    font-size:10px;
+    font-weight:bold;
+    text-align:center;
+  }
+  .createPlanInputValue {
+    font-size:14px;
+    line-height:22px;
+    padding-top:2px;
+    text-align:center;
+    margin-top:8px;
+    margin-right:5px;
+    z-index:3;
+    height:23px;
+    position:relative;
+    float:right;
+    clear:right;
+  }
+  .createPlanDate {
+    margin-top:5px;
+  }
+  .createPlanDateValue {
+    margin-left:-224px;
+    width:212px;
+    background-color:#ffffff;
+    font-weight:bold;
+    color:#660000;
+    border-left:2px solid #ffffff;
+  }
+  .createPlanEventValue, .createPlanLocationValue {
+    width:104px;
+    margin-left:-112px;
+    font-style:italic;
+    color:#999999;
+  }
+  .createPlanEntry {
+    clear:both;
+  }
+  .createPlanEntryText {
+    float:right;
+    clear:right;
+  }
+  .createPlanDateInput {
+    margin:5px;
+  }
+  .createPlanLocationInput, .createPlanEventInput {
+    margin:5px;
+  }
+  .createPlanInput {
+    width:383px;
+    font-size:16px;
+    padding:0px 5px;
+    line-height:26px;
+  }
+  .createPlanLabel {
+    width:45px;
+    float:left;
+    clear:left;
+    margin-top:12px;
+    text-align:right;
+    font-weight:bold;
+  }
+  .commentStatusAuthor {
+  }
+  .commentStatusBodyWrapper {
+  }
+  .createPlan .commentStatusBody {
+    width:380px;
+    height:45px;
+  }
+  .createPlanCommentStatusSpacer {
+    height:25px;
+  }
+  .createPlan .jqEasyCounterMsg {
+    display:none;
+    float:left;
+    clear:left;
+    height:20px;
+    font-size:16px;
+    line-height:20px;
+    margin-left:15px;
+    margin-top:2px;
+    font-weight:bold;
+    text-align:left;
+    width:60px;
+  }
+  .createPlanIncludeLinkBox {
+    text-align:right;
+    float:right;
+    margin:5px 7px 5px 0px;
+    font-size:12px;
+    font-weight:bold;
+   }
+   .createPlanIncludeLinkLink {
+    color:#334455;
+   }
+   .createPlanIncludeLinkLink:hover {
+    color:#112233;
+   }
+   .createPlanCommentSend {
+    margin-top:10px;
+    margin-bottom:10px;
+    width:100%;
+    float:left;
+    clear:both;
+    text-align:center;
+   }
+   .createPlanCommentSend img {
+    height:30px;
+   }
+   .createPlanResultMsg {
+    clear:both;
+   }
+
+
+  </style>
+
+  </head>
+
+    
+  <body class="body">
+    
+
+    
+
+ <div class="bodyWrapper">
+  <div class="bodyContent">
+    
+  <div class="landing">
+    
+    <div class="landingLeft">
+
+      
+      <div class="landingTitle">
+        <h1>
+          <img src="./Rally - Events, Plans, Reminders - Time-sensitive announcements from Twitter friends_files/rallyLogo18.png" alt="Rally Logo"><br>
+	  Time-sensitive announcements<br>
+	  from your Twitter friends<br>
+          <br>
+	  Summarized, prioritized, and delivered <br>
+	  to your email inbox every morning<br>
+          <br>
+	  <span class="landingTitleList">
+	  Business &amp; Entertainment Events<br>
+	  Social Plans: Concerts, Sports, Parties, Travel<br>
+	  Important Deadlines and Reminders<br>
+          </span>
+        </h1>
+
+      </div>
+
+      <div class="landingSignIn">
+        <a href="http://rallyplan.com/Sign%20In%20With%20Twitter" id="twitterSignIn">
+	  <img src="./Rally - Events, Plans, Reminders - Time-sensitive announcements from Twitter friends_files/tauth2.png" height="36">
+        </a>
+      </div>
+
+
+      <div class="landingFooter">
+        <br>
+        <br>
+        <a href="http://rallyplan.com/about" title="About Rally - Events, Concerts, Plans, Deadlines - Time-sensitive announcements from Twitter friends">
+	  About Rally
+	</a>
+      </div>
+
+    </div>
+   
+    <div class="landingRight">
+      
+    </div>
+
+  </div>
+
+    
+  <div class="metroControl">
+    <ul>
+  
+    <li class="metroLI">
+      <a href="http://rallyplan.com/metro/boston" title="Rally Boston - Events, Concerts, Plans, Deadlines - Time-sensitive announcements from Twitter friends">
+        Boston
+      </a>
+    </li>
+    <li class="metroLI">
+      <a href="http://rallyplan.com/metro/chicago" title="Rally Chicago - Events, Concerts, Plans, Deadlines - Time-sensitive announcements from Twitter friends">
+        Chicago
+      </a>
+    </li>
+    <li class="metroLI">
+      <a href="http://rallyplan.com/metro/los%20angeles" title="Rally Los Angeles - Events, Concerts, Plans, Deadlines - Time-sensitive announcements from Twitter friends">
+        Los Angeles
+      </a>
+    </li>
+    <li class="metroLI">
+      <a href="http://rallyplan.com/metro/new%20york" title="Rally New York - Events, Concerts, Plans, Deadlines - Time-sensitive announcements from Twitter friends">
+        New York
+      </a>
+    </li>
+    <li class="metroLI">
+      <a href="http://rallyplan.com/metro/san%20francisco" title="Rally San Francisco - Events, Concerts, Plans, Deadlines - Time-sensitive announcements from Twitter friends">
+        San Francisco
+      </a>
+    </li>
+    <li class="metroLI">
+      <a href="http://rallyplan.com/metro/seattle" title="Rally Seattle - Events, Concerts, Plans, Deadlines - Time-sensitive announcements from Twitter friends">
+        Seattle
+      </a>
+    </li>
+    <li class="metroLI">
+      <a href="http://rallyplan.com/metro/washington%20dc" title="Rally Washington DC - Events, Concerts, Plans, Deadlines - Time-sensitive announcements from Twitter friends">
+        Washington DC
+      </a>
+    </li>
+    </ul>
+  </div>
+
+  </div>
+ </div>
+
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body></html>
