@@ -96,13 +96,6 @@ $.fn.extend({
   <script type="text/javascript">
       $(document).ready(function() {
         
-  $("#twitterSignIn").click(function(e)
-    {
-      e.preventDefault();
-      $.get("http://rallyplan.com/api/headsUp",{path:$(location).attr("href")});
-      window.open('http://rallyplan.com/twitter/authenticate/', 'Rally Twitter Login', 'height=500,width=800,scrollbars,resizable,status,location');
-    }
-  );
 
       });
   </script>
@@ -433,6 +426,24 @@ $.fn.extend({
     text-align:center;
   }
 
+
+	#discontinue {
+		margin: 40px 0px;
+	}
+
+	#discontinue h2 {
+		color:#660000;
+		font-size:24px;
+		margin-bottom:20px;
+	}
+	
+	#discontinue a {
+		color:#880000;
+		font-size:18px;
+		text-decoration:underline;
+	}
+
+
   
   .landing {
     width:1164px;
@@ -506,6 +517,16 @@ margin-top:40px;
   <div class="aboutTOC">
     <h1>About Rally</h1><br>
     <br>
+
+		<div id="discontinue">
+			<h2>
+	      Rally has been discontinued as a service
+	    </h2>
+				<a href="http://blog.marksoper.net/Requiem-For-A-Startup-April-30-2011.html">
+		      Read about why Rally was discontinued
+		    </a>
+	  </div>
+
     <h2>What is Rally?<br><br>
         <em>A daily email service that delivers time-sensitive information from your Twitter friends - announcements, events, plans, reminders, etc.</em></h2>
     <p>
@@ -551,7 +572,7 @@ margin-top:40px;
       </div>
 
       <div class="landingSignIn">
-        <a href="http://rallyplan.com/Sign%20In%20With%20Twitter" id="twitterSignIn">
+        <a href="http://blog.marksoper.net/Requiem-For-A-Startup-April-30-2011.html" id="twitterSignIn">
 	  <img src="http://s3.amazonaws.com/rally_img/tauth2.png" height="36">
         </a>
       </div>
